@@ -4,6 +4,7 @@ const {
   teamResult,
 } = require("./controllers/result.controller.js");
 
+// Keeping all routes here as we know there will be only few routes
 module.exports = (app) => {
   // teams Routes
   app.post("/add-team", addTeam);

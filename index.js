@@ -10,8 +10,11 @@ const port = 3000;
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+
 // Database
-const { connectDB, getDB } = require("./connect/db.js");
+const { connectDB, getDB } = require("./db/connect.js");
 
 let db;
 async function run() {
@@ -66,5 +69,3 @@ app.use("*", (req, res) => {
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
-
-run();

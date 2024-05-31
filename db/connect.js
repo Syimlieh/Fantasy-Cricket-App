@@ -27,18 +27,30 @@ const client = new MongoClient(uri, {
 });
 
 let db;
-
+let dbPromise;
 async function connectDB() {
-  try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    db = client.db(DB_NAME);
-    console.log("You successfully connected to MongoDB!");
-    return db;
-  } catch (error) {
-    console.error("Failed to connect to MongoDB", error);
-    throw error;
+  if (!dbPromise) {
+    dbPromise = client
+      .connect()
+      .then(() => {
+        db = client.db(DB_NAME);
+        console.log("You successfully connected to MongoDB!");
+        return db;
+      })
+      .catch((error) => {
+        console.error("Failed to connect to MongoDB", error);
+        throw error;
+      });
   }
+  return dbPromise;
 }
 
-module.exports = { connectDB, getDB: () => db };
+const getDB = () => {
+  if (!db) {
+    throw new Error("Database not connected");
+  }
+
+  return db;
+};
+
+module.exports = { connectDB, getDB };
