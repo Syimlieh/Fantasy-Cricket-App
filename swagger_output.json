@@ -44,8 +44,7 @@
                     "JC Buttler",
                     "SV Samson",
                     "D Padikkal",
-                    "R Parag",
-                    "YS Chahal"
+                    "R Parag"
                   ],
                   "items": {
                     "type": "string"
@@ -78,10 +77,14 @@
     },
     "/process-result": {
       "post": {
-        "description": "",
+        "tags": [
+          "Result"
+        ],
+        "summary": "Process Result",
+        "description": "Process Result",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }

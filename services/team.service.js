@@ -29,6 +29,65 @@ const addTeam = async (payload) => {
   }
 };
 
+const fetchAllTeams = async (teamQuery) => {
+  await connectDB();
+  const db = getDB();
+  try {
+    const teams = await db
+      .collection(collection.TEAMS)
+      .find(teamQuery)
+      .toArray();
+    if (!teams.length) {
+      return {
+        success: false,
+        data: "No Team Found. Please add Team First.",
+        status: 404,
+      };
+    }
+    return {
+      success: true,
+      data: teams,
+      status: 200,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: "Failed While Trying to Fetch Teams. Something Went Wrong.",
+      status: 500,
+    };
+  }
+};
+
+const updateTeam = async (teamQuery, payload) => {
+  await connectDB();
+  const db = getDB();
+  try {
+    const updatedTeams = await db
+      .collection(collection.TEAMS)
+      .findOneAndUpdate(teamQuery, { $set: payload }, { new: true });
+    if (!updatedTeams) {
+      return {
+        success: false,
+        data: "Failed While Trying to Update Team.",
+        status: 400,
+      };
+    }
+    return {
+      success: true,
+      data: updateTeam,
+      status: 200,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: 500,
+      data: error.message,
+    };
+  }
+};
+
 module.exports = {
   addTeam,
+  fetchAllTeams,
+  updateTeam,
 };
