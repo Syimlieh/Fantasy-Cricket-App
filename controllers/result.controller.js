@@ -14,7 +14,7 @@ const processResult = async (req, res) => {
   if (!fetchAllTeams.success) {
     return res.status(fetchAllTeams.status).json({
       success: fetchAllTeams.success,
-      data: fetchAllTeams.data,
+      error: fetchAllTeams.data,
     });
   }
 
@@ -24,7 +24,7 @@ const processResult = async (req, res) => {
     if (!success) {
       return res.status(400).json({
         success,
-        data: data,
+        error: data,
       });
     }
 
@@ -34,7 +34,7 @@ const processResult = async (req, res) => {
     if (!updateResult.success) {
       return res.status(updateResult.status).json({
         success: updateResult.success,
-        data: updateResult.data,
+        error: updateResult.data,
       });
     }
   }
@@ -60,7 +60,7 @@ const teamResult = async (req, res) => {
   if (!fetchAllTeams.success) {
     return res.status(fetchAllTeams.status).json({
       success: fetchAllTeams.success,
-      data: fetchAllTeams.data,
+      error: fetchAllTeams.data,
     });
   }
 
@@ -72,7 +72,7 @@ const teamResult = async (req, res) => {
   teams.forEach((team) => {
     if (team.totalPoints > maxPoints) {
       maxPoints = team.totalPoints;
-      // Move all previous winners to others since a new max is found
+      // Move all previous winners to others if new max is found
       others = others.concat(winners);
       winners = [team];
     } else if (team.totalPoints === maxPoints) {

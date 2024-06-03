@@ -31,7 +31,7 @@ const addTeam = async (req, res) => {
   if (!checkSelectedPlayers.success) {
     return res.status(checkSelectedPlayers.status).json({
       success: checkSelectedPlayers.success,
-      data: checkSelectedPlayers.data,
+      error: checkSelectedPlayers.data,
     });
   }
 
