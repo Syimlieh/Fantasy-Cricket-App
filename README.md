@@ -82,7 +82,9 @@ Run out 	          +6
 - IF the DB connection is successfull and app listen on port
 - Go to browser and paste this in the url: http://localhost:3000/api-docs
 - You will see the swagger documention with all the routes.
-- In the create new Team API. Make sure to add 11 players. Then you can click on execute to add new Team.
+- In the create new Team API. Make sure to add 11 players. 
+- Make sure to remove the field removeThisBeforeExecuting. It was added just to show a list of few players. 
+- Then you can click on execute to add new Team.
 - After adding few teams. We can process te result using the Process Result API from swagger. 
 - If we want to check who is the winner team then we execute the Team Result.
 - All winner team are inside winner[] and the rest of the team are inside other[] 

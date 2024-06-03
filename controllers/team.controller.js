@@ -18,7 +18,8 @@ const addTeam = async (req, res) => {
           { $name: "MS Dhoni" },
         ],
         $captain: "MS Dhoni",
-        $viceCaptain: "Robin Uthappa"
+        $viceCaptain: "Robin Uthappa",
+        $removeThisBeforeExecuting: ["MS Dhoni", "MJ Santner", "RD Gaikwad", "DP Conway", "N Jagadeesan", "Simarjeet Singh", "YBK Jaiswal", "TA Boult", "SV Samson", "D Padikkal", "R Parag"]
       }
     }
   */
