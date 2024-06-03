@@ -187,7 +187,7 @@ const calculatePoints = (team) => {
     }
   });
 
-  // Add bonuses for runs scored
+  // bonuses for runs scored
   Object.keys(runsScored).forEach((player) => {
     if (runsScored[player] >= 30 && runsScored[player] < 50)
       points[player] += BATTING_POINTS.THIRTY_RUN_BONUS; // 30 Run Bonus

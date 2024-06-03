@@ -7,6 +7,7 @@ const DB_URL = process.env["DB_URL"];
 const DB_NAME = "task-jeff";
 const DB_COLLECTION_NAME = "players";
 
+// Use This for atlas
 // Mongo URI
 // const uri =
 //   "mongodb+srv://" +
@@ -17,7 +18,9 @@ const DB_COLLECTION_NAME = "players";
 //   DB_URL +
 //   "/?retryWrites=true&w=majority";
 
+// Use this For local DB
 const uri = "mongodb://127.0.0.1:27017";
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,

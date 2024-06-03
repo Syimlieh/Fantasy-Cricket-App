@@ -52,7 +52,7 @@ const fetchAllTeams = async (teamQuery) => {
     if (!teams.length) {
       return {
         success: false,
-        data: "No Team Found. Please add Team First.",
+        data: "No New Team Found. Please add Team First.",
         status: 404,
       };
     }
