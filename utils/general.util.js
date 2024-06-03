@@ -2,8 +2,18 @@ const PlayerJson = require("../data/players.json");
 const MatchData = require("../data/match.json");
 
 const checkPlayers = ({ players, captain, viceCaptain }) => {
+  if (captain === viceCaptain) {
+    return {
+      success: false,
+      data: "Captain And Vice Captain cannot be the same.",
+      status: 400,
+    };
+  }
   // Check if captain and vice captain are included in the player list
-  if (!players.includes(captain) || !players.includes(viceCaptain)) {
+  if (
+    !players.some((p) => p.name === captain) ||
+    !players.some((p) => p.name === viceCaptain)
+  ) {
     return {
       success: false,
       data: "Captain And Vice Captain are not in the Player List.",
@@ -21,7 +31,7 @@ const checkPlayers = ({ players, captain, viceCaptain }) => {
 
   for (let player of players) {
     // Check if the selected player actually Exist.
-    const playerData = PlayerJson.find((p) => p.Player === player);
+    const playerData = PlayerJson.find((p) => p.Player === player.name);
     if (!playerData) {
       return {
         success: false,
@@ -84,7 +94,8 @@ const calculatePoints = (team) => {
   const wicketsTaken = {};
   const maidensBowled = {};
 
-  team.players.forEach((player) => {
+  const players = team.players.map((item) => item.name);
+  players.forEach((player) => {
     points[player] = 0;
     catches[player] = 0;
     runsScored[player] = 0;
@@ -104,7 +115,7 @@ const calculatePoints = (team) => {
     } = delivery;
 
     // Batting points
-    if (team.players.includes(batter)) {
+    if (players.includes(batter)) {
       runsScored[batter] += batsman_run;
 
       if (batsman_run > 0) points[batter] += 1; // Run
@@ -118,7 +129,7 @@ const calculatePoints = (team) => {
     }
 
     // Bowling points
-    if (team.players.includes(bowler)) {
+    if (players.includes(bowler)) {
       // In the rules wicket and bonus have two diff point
       // So i am assuming that any out except by run_out. Point will be givent to bowler.
       if (isWicketDelivery && kind !== "run_out") {
@@ -131,7 +142,7 @@ const calculatePoints = (team) => {
     }
 
     // Fielding points
-    if (fielder && team.players.includes(fielder)) {
+    if (fielder && players.includes(fielder)) {
       if (kind === "caught") {
         points[fielder] += 8;
         catches[fielder] += 1;

@@ -15,8 +15,7 @@ const addTeam = async (req, res) => {
       schema: {
         $teamName: "Winner Team",
         $players: [
-          "MS Dhoni", "MJ Santner", "RD Gaikwad", "DP Conway", "N Jagadeesan", "Simarjeet Singh",
-          "YBK Jaiswal", "JC Buttler", "SV Samson", "D Padikkal", "R Parag"
+          { $name: "MS Dhoni" },
         ],
         $captain: "MS Dhoni",
         $viceCaptain: "Robin Uthappa"
@@ -24,7 +23,6 @@ const addTeam = async (req, res) => {
     }
   */
   // Assuming we only have 1 user
-  // In a real world application, we will use playerId instead of Name
   const payload = req.body;
 
   const checkSelectedPlayers = checkPlayers(payload);
