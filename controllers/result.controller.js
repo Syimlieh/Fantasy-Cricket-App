@@ -45,7 +45,51 @@ const processResult = async (req, res) => {
 };
 
 const teamResult = async (req, res) => {
-  res.send("Team Result");
+  /*
+    #swagger.tags = ['Result']
+    #swagger.description = 'Team Results'
+    #swagger.summary = 'Team Results'
+  */
+
+  const query = {
+    totalPoints: {
+      $ne: null,
+    },
+  };
+  const fetchAllTeams = await TeamService.fetchAllTeams(query);
+  if (!fetchAllTeams.success) {
+    return res.status(fetchAllTeams.status).json({
+      success: fetchAllTeams.success,
+      data: fetchAllTeams.data,
+    });
+  }
+
+  const teams = fetchAllTeams.data;
+
+  let maxPoints = -Infinity;
+  let winners = [];
+  let others = [];
+  teams.forEach((team) => {
+    if (team.totalPoints > maxPoints) {
+      maxPoints = team.totalPoints;
+      // Move all previous winners to others since a new max is found
+      others = others.concat(winners);
+      winners = [team];
+    } else if (team.totalPoints === maxPoints) {
+      winners.push(team);
+    } else {
+      others.push(team);
+    }
+  });
+
+  const result = {
+    winners,
+    others,
+  };
+  return res.status(fetchAllTeams.status).json({
+    success: fetchAllTeams.success,
+    data: result,
+  });
 };
 
 module.exports = {

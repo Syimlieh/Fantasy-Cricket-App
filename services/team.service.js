@@ -36,6 +36,7 @@ const fetchAllTeams = async (teamQuery) => {
     const teams = await db
       .collection(collection.TEAMS)
       .find(teamQuery)
+      .sort({ totalPoints: 1 })
       .toArray();
     if (!teams.length) {
       return {
