@@ -15,12 +15,16 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 // Database
 const { connectDB, getDB } = require("./db/connect.js");
+const { collection } = require("./db/collections.db.js");
 
 let db;
 async function run() {
   try {
     await connectDB();
     db = getDB();
+    await db
+      .collection(collection.TEAMS)
+      .createIndex({ teamName: 1 }, { unique: 1 });
   } catch (error) {
     console.error("Failed to run the application", error);
   }
@@ -34,9 +38,7 @@ async function sampleCreate() {
     demo: "doc demo",
     hello: "world",
   };
-  const demo_create = await db
-    .collection(DB_COLLECTION_NAME)
-    .insertOne(demo_doc);
+  const demo_create = await db.collection(collection.TEAMS).insertOne(demo_doc);
 
   console.log("Added!");
   console.log(demo_create.insertedId);

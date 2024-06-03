@@ -21,6 +21,17 @@ const addTeam = async (payload) => {
       status: 201,
     };
   } catch (error) {
+    if (
+      error.name === "MongoServerError" &&
+      error.code === 11000 &&
+      error.keyValue.teamName
+    ) {
+      return {
+        success: false,
+        data: "Team with this Name Already Exists.",
+        status: 409,
+      };
+    }
     return {
       success: false,
       data: "Failed While Trying to Save Team. Something Went Wrong.",
